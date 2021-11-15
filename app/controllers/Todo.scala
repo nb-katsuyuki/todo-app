@@ -7,7 +7,8 @@ package controllers
 import javax.inject._
 import play.api.mvc._
 import lib.model.Todo
-import model.ViewValueTodoList
+import lib.model.TodoCategory
+import model.ViewValueTodo
 import lib.persistence._
 
 // import scala.concurrent.Future
@@ -19,7 +20,7 @@ import scala.concurrent.duration
 // import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-class TodoListController @Inject() (
+class TodoController @Inject() (
     val controllerComponents: ControllerComponents
 ) extends BaseController {
 
@@ -28,14 +29,18 @@ class TodoListController @Inject() (
       val todoList: Seq[Todo] =
         Await.result(onMySQL.TodoRepository.all, duration.Duration.Inf)
       //@FIXME エラー時動作
+      val categorys           =
+        Await.result(onMySQL.TodoCategoryRepository.all, duration.Duration.Inf)
 
-      val vv = ViewValueTodoList(
+      val debug = categorys
+
+      val vv = ViewValueTodo(
         title = "Todo一覧",
         cssSrc = Seq("main.css"),
         jsSrc = Seq("main.js"),
         todoList = todoList,
-        debug = None
+        debug = debug
       )
-      Ok(views.html.TodoList(vv))
+      Ok(views.html.Todo(vv))
     }
 }

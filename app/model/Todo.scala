@@ -7,7 +7,7 @@ package model
 import lib.model.Todo
 
 // Todo一覧ページのviewvalue
-case class ViewValueTodoList(
+case class ViewValueTodo(
     title: String,
     cssSrc: Seq[String],
     jsSrc: Seq[String],
