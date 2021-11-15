@@ -1,0 +1,13 @@
+@*
+*
+* to do sample project
+*
+*@
+
+@(vv: model.ViewValueTodoList)
+@common.Default(vv){
+<ul>
+   @for(todo <- vv.todoList){ <li><a href="todo/@todo.id">@todo.title</a></li>}
+      <!-- @vv.debug -->
+</ul>
+}

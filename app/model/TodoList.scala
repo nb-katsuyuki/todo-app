@@ -6,10 +6,11 @@ package model
 
 import lib.model.Todo
 
-// Topページのviewvalue
-case class ViewValueHome(
+// Todo一覧ページのviewvalue
+case class ViewValueTodoList(
     title: String,
     cssSrc: Seq[String],
     jsSrc: Seq[String],
+    todoList: Seq[Todo],
     debug: Any
 ) extends ViewValueCommon

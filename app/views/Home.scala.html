@@ -8,7 +8,7 @@
 @common.Default(vv){
 <ul>
    <li><a>カテゴリー一覧</a></li>
-   <li><a>Todo一覧</a></li>
-   @for(todo <- vv.todoes){ <li><a>@todo</a></li>}
+   <li><a href="/todo">Todo一覧</a></li>
+   @vv.debug
 </ul>
 }
