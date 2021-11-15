@@ -4,14 +4,14 @@
 *
 *@
 
-@(vv: model.ViewValueTodo)
+@(vv: model.TodoPage)
 @common.Default(vv){
 <ul>
-      @for(todo <- vv.todoList){ <li class="pending"><a href="todo/@todo.id">
-                  <p>@todo.title</p>
-                  <p>@todo.body</p>
-                  <p>@todo.state.name</p>
-                  <p>@todo.categoryId</p>
+      @for(item <- vv.todoList){ <li class="@item.category.slug"><a href="todo/@item.todo.id">
+                  <p>@item.todo.title</p>
+                  <p>@item.todo.body</p>
+                  <p>@item.todo.state.name</p>
+                  <p>@item.category.name</p>
             </a></li>}
             @vv.debug
 </ul>

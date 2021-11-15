@@ -4,13 +4,11 @@
 
 package model
 
-import lib.model.Todo
-
 // Todo一覧ページのviewvalue
-case class ViewValueTodo(
+case class TodoPage(
     title: String,
     cssSrc: Seq[String],
     jsSrc: Seq[String],
-    todoList: Seq[Todo],
+    todoList: Seq[TodoItem],
     debug: Any
 ) extends ViewValueCommon
