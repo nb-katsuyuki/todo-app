@@ -34,10 +34,10 @@ object TodoCategory {
   sealed abstract class Color(val code: Short, val className: String)
       extends EnumStatus
   object Color extends EnumStatus.Of[Color] {
-    case object PENDING   extends Color(code = 1, className = "pending")
-    case object RUNNING   extends Color(code = 2, className = "runnning")
-    case object COMPLETED extends Color(code = 3, className = "completed")
-    case object UNKNOWN   extends Color(code = 0, className = "unknown")
+    case object FRONT   extends Color(code = 1, className = "front")
+    case object BACK    extends Color(code = 2, className = "back")
+    case object INFRA   extends Color(code = 3, className = "infra")
+    case object UNKNOWN extends Color(code = 0, className = "unknown")
   }
 
   // INSERT時のIDがAutoincrementのため,IDなしであることを示すオブジェクトに変換

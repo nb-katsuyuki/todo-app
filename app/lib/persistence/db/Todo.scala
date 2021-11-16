@@ -33,20 +33,13 @@ case class TodoTable[P <: JdbcProfile]()(implicit val driver: P)
   class Table(tag: Tag) extends BasicTable(tag, "to_do") {
     import Todo._
     // Columns
-    /* @1 */
-    def id         = column[Id]("id", O.UInt64, O.PrimaryKey, O.AutoInc)
-    /* @2 */
-    def categoryId = column[Int]("category_id", O.UInt64) // @TODO  とりあえず
-    /* @3 */
-    def title      = column[String]("title", O.Utf8Char255)
-    /* @4 */
-    def body       = column[Option[String]]("body", O.Text)
-    /* @5 */
-    def state      = column[Status]("state", O.UInt8)
-    /* @6 */
-    def updatedAt  = column[LocalDateTime]("updated_at", O.TsCurrent)
-    /* @7 */
-    def createdAt  = column[LocalDateTime]("created_at", O.Ts)
+    /* @1 */ def id         = column[Id]("id", O.UInt64, O.PrimaryKey, O.AutoInc)
+    /* @2 */ def categoryId = column[Int]("category_id", O.UInt64)
+    /* @3 */ def title      = column[String]("title", O.Utf8Char255)
+    /* @4 */ def body       = column[Option[String]]("body", O.Text)
+    /* @5 */ def state      = column[Status]("state", O.UInt8)
+    /* @6 */ def updatedAt  = column[LocalDateTime]("updated_at", O.TsCurrent)
+    /* @7 */ def createdAt  = column[LocalDateTime]("created_at", O.Ts)
 
     type TableElementTuple = (
         Option[Id],

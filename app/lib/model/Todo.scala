@@ -52,7 +52,7 @@ object Todo {
         categoryId = 0, // @TODO とりあえず
         title = title,
         body = body,
-        state = state
+        state = Todo.Status.PENDING
       )
     )
   }

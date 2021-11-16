@@ -10,6 +10,5 @@ import lib.model.Todo
 case class ViewValueHome(
     title: String,
     cssSrc: Seq[String],
-    jsSrc: Seq[String],
-    debug: Any
+    jsSrc: Seq[String]
 ) extends ViewValueCommon

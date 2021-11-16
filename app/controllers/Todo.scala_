@@ -1,4 +1,4 @@
-/**
+  /**
  * to do sample project
  */
 
@@ -8,8 +8,8 @@ import javax.inject._
 import play.api.mvc._
 import lib.model.Todo
 import lib.model.TodoCategory
-import model.TodoItem
-import model.TodoPage
+// import model.TodoItem
+// import model.TodoPage
 import lib.persistence._
 
 import scala.concurrent.Future
@@ -24,10 +24,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class TodoController @Inject() (
     val controllerComponents: ControllerComponents
 ) extends BaseController {
-
-  // def F(id: String): Future[Seq[String]] = Future({ (1 to 10).map(_ + id) })
-  //def F(id:String): Future[Seq[String]] = Future({ (1 to 10).map(_ + id) })
-
   def index() =
     Action { implicit req =>
       // @TODO Actionに直接処理を書くのは良くない
@@ -59,16 +55,46 @@ class TodoController @Inject() (
         )
       }
       val todoList: Seq[TodoItem]    = Await.result(res, duration.Duration.Inf)
+      val categoryList: Seq[TodoCategory] =
+        Await.result(cf, duration.Duration.Inf)
 
-      val page = TodoPage(
+      val common = CommonPage(
         title = "Todo一覧",
         cssSrc = Seq("main.css"),
         jsSrc = Seq("main.js"),
-        todoList = todoList,
-        debug = None
+        csrf = "ランダムな値を入れて受け取りで比較する" // @TODO 今はとりあえず実装しない
       )
 
-      Ok(views.html.Todo(page))
-
+      Ok(views.html.Todo(common, todoList, categoryList, debug))
     }
+  /*
+  def detail(id: Int) = Action { implicit req =>
+    val todo = onMySQL.TodoRepository.get(id)
+
+    Ok(views.html.TodoDetail(v))
+  }
+   */
+  /*
+  def add(title: String, body: Option[String], categoryId: Int) = Action {
+    implicit req =>
+      // validate
+      // @TOOD check CSRF
+      // title
+      // body
+      // category
+
+      onMySQL.TodoRepository.add(
+        Todo(
+          title = title,
+          body = body,
+          categoryId = categoryId
+        )
+      )
+
+      // @TODO 本当はリダイレクトとかにしたほうがいいかな
+      def v = this.TodoListup(req)
+      Ok(views.html.Todo(v, 1))
+  }
+   */
+
 }
