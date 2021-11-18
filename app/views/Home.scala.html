@@ -8,9 +8,9 @@
 * データモデルをViewに渡すのは本当は良くないよ
 *@
 @import lib.model.Todo
-@import lib.model.TodoCategory
+@import lib.model.Category
 
-@(vv: model.HomeView,todos:Seq[Todo],categorys:Seq[TodoCategory],debug:Any = None)
+@(vv: model.HomeView,todos:Seq[Todo],categorys:Seq[Category],debug:Any = None)
 @common.Default(vv){
 <h2>カテゴリー一覧</h2>
 <ul>
@@ -22,6 +22,7 @@
       </li>
 }
 </ul>
+<div><a href="category/0">追加</a></div>
 <h2>Todo一覧</h2>
 <ul>
       @for(todo <- todos){ 

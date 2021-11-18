@@ -11,8 +11,8 @@ import java.time.LocalDateTime
 
 // ユーザーを表すモデル
 //~~~~~~~~~~~~~~~~~~~~
-import TodoCategory._
-case class TodoCategory(
+import Category._
+case class Category(
     id: Option[Id],
     name: String,
     slug: String,
@@ -23,17 +23,16 @@ case class TodoCategory(
 
 // コンパニオンオブジェクト
 //~~~~~~~~~~~~~~~~~~~~~~~~
-object TodoCategory {
+object Category {
   val Id = the[Identity[Id]]
-  type Id         = Long @@ TodoCategory
-  type WithNoId   = Entity.WithNoId[Id, TodoCategory]
-  type EmbeddedId = Entity.EmbeddedId[Id, TodoCategory]
+  type Id         = Long @@ Category
+  type WithNoId   = Entity.WithNoId[Id, Category]
+  type EmbeddedId = Entity.EmbeddedId[Id, Category]
 
   // Color定義
   //~~~~~~~~~~~~~~~~~
-  sealed abstract class Color(val code: Short, val className: String)
-      extends EnumStatus
-  object Color extends EnumStatus.Of[Color] {
+  sealed abstract class Color(val code: Short, val className: String) extends EnumStatus
+  object Color                                                        extends EnumStatus.Of[Color] {
     case object FRONT   extends Color(code = 1, className = "front")
     case object BACK    extends Color(code = 2, className = "back")
     case object INFRA   extends Color(code = 3, className = "infra")
@@ -47,11 +46,22 @@ object TodoCategory {
       color: Color
   ): WithNoId = {
     new Entity.WithNoId(
-      new TodoCategory(
+      new Category(
         id = None,
         name = name,
         slug = slug,
         color = color
+      )
+    )
+  }
+
+  def Empty(): WithNoId = {
+    new Entity.WithNoId(
+      new Category(
+        id = None,
+        name = "",
+        slug = "",
+        color = Color.UNKNOWN
       )
     )
   }
