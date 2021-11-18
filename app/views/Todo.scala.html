@@ -7,22 +7,28 @@
 @*
 * データモデルをViewに渡すのは本当は良くないよ
 *@
+
 @import lib.model.Todo
 @import lib.model.TodoCategory
+@import helper._
 
-@(vv: model.ViewValueHome,todo:Todo,categorys:Seq[TodoCategory],debug:Any = None)
+@* Seq[(String,String)] <- ここは専用の型を定義したほうがいいかな *@
+
+@(vv: model.HomeView,todoForm:Form[Todo],statusesSelect:Seq[(String,String)],categorySelect:Seq[(String,String)],debug:Any = None)(implicit request: RequestHeader, messagesProvider: MessagesProvider)
 @common.Default(vv){
-<form action="/todo" method="get">
-      <!-- <input type="hidden" name="csrf" value="csrf"> -->
-      <!-- <input name="id" type="hidden" value="@todo.id" /> -->
-      <p><label>Title</label><input name="title" type="text" value="@todo.title" /></p>
-      <p><label>body</label><textarea name="body">@todo.body</textarea></p>
-      <p><label>Category</label>
-            <select name="categoryId">
-                  @for(category <- categorys){ <option value="@category.id"
-                        @if(category.id==todo.categoryId){selected}>@category.name</option> }
-            </select>
-      </p>
-      <p><input type="submit" value="add"><input type="reset" value="reset"></p>
-</form>
+@form(action = routes.HomeController.upsert){
+<fieldset>
+      @CSRF.formField
+      <input type="hidden" value="@todoForm("id").value" name="id">
+      @inputText(todoForm("title"))
+      @textarea(todoForm("body"))
+      @if(None == todoForm("id").value){  // 素直にフォーム分けておいたほうがきれいかな
+            <input type="hidden" value="@todoForm("state").value" name="state">
+      }else{
+            @select(todoForm("state"),options = statusesSelect)
+      }
+      @select(todoForm("categoryId"),options = categorySelect)
+</fieldset>
+<div><input type="submit" value="upsert"><input type="reset" value="reset"></div>
+}
 }
